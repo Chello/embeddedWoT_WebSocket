@@ -1,7 +1,6 @@
 #include "Arduino.h"
 #include <WebSocketsServer.h>
 #include <ArduinoJson.h>
-#include "WebSocketBinding.h"
 
 WebSocketBinding::WebSocketBinding(int portSocket): ac_doc(2000), ia_doc(1000), ipia_doc(2000), e_doc(1000), es_doc(20), ipe_doc(2000), webSocket(portSocket) {    
     // events data
