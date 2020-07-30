@@ -142,5 +142,5 @@ class WebSocketBinding {
 
 };
 
-#include "WebSocketBinding.cpp"
+#include "embeddedWoT_WebSocket.cpp"
 #endif
