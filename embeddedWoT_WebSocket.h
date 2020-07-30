@@ -1,5 +1,5 @@
-#ifndef WebSocketBinding_h
-#define WebSocketBinding_h
+#ifndef embeddedWoT_WebSocket_h
+#define embeddedWoT_WebSocket_h
 #include "Arduino.h"
 #include <WebSocketsServer.h>
 
@@ -12,13 +12,13 @@ typedef String (*actions_handler)(String);
 /**
  * Class for managing WebSocket requests for WoT Embedded devices.
  */
-class WebSocketBinding {
+class embeddedWoT_WebSocket {
     public:
         /**
          * Constructor. Requires WebSocket port
          * @param portSocket the port of the WebSocket
          */
-        WebSocketBinding(int portSocket);//: ia_doc(1000), ipia_doc(2000), e_doc(1000), es_doc(20), ipe_doc(2000);
+        embeddedWoT_WebSocket(int portSocket);//: ia_doc(1000), ipia_doc(2000), e_doc(1000), es_doc(20), ipe_doc(2000);
 
         /**
          * Sends a WebSocket message for a certain event. 
@@ -142,5 +142,5 @@ class WebSocketBinding {
 
 };
 
-#include "embeddedWoT_WebSocket.cpp"
+// #include "embeddedWoT_WebSocket.cpp"
 #endif

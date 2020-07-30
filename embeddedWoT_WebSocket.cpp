@@ -1,8 +1,9 @@
 #include "Arduino.h"
 #include <WebSocketsServer.h>
 #include <ArduinoJson.h>
+#include "embeddedWoT_WebSocket.h"
 
-WebSocketBinding::WebSocketBinding(int portSocket): ac_doc(2000), ia_doc(1000), ipia_doc(2000), e_doc(1000), es_doc(20), ipe_doc(2000), webSocket(portSocket) {    
+embeddedWoT_WebSocket::embeddedWoT_WebSocket(int portSocket): ac_doc(2000), ia_doc(1000), ipia_doc(2000), e_doc(1000), es_doc(20), ipe_doc(2000), webSocket(portSocket) {    
     // events data
     ipe_arr = ipe_doc.createNestedArray("clients_list");
     ipia_arr = ipia_doc.createNestedArray("clients_list");
@@ -29,7 +30,7 @@ WebSocketBinding::WebSocketBinding(int portSocket): ac_doc(2000), ia_doc(1000), 
     webSocket.begin();
 }
 
-void WebSocketBinding::sendWebSocketTXT(String txt, String event_endpoint) {
+void embeddedWoT_WebSocket::sendWebSocketTXT(String txt, String event_endpoint) {
     for(i=0; i<ipe_arr.size(); i++) {
         String ws_ip = ipe_arr[i]["ip"];
         JsonArray ae = e_doc[ws_ip];
@@ -44,15 +45,15 @@ void WebSocketBinding::sendWebSocketTXT(String txt, String event_endpoint) {
     }
 }
 
-void WebSocketBinding::loop() {
+void embeddedWoT_WebSocket::loop() {
     webSocket.loop();
 }
 
-void WebSocketBinding::test() {
+void embeddedWoT_WebSocket::test() {
     Serial.printf("Nel test %s\n", this->events_endpoint[0].c_str());
 }
 
-bool WebSocketBinding::_setEventHandled(String ip_s, int num) {
+bool embeddedWoT_WebSocket::_setEventHandled(String ip_s, int num) {
     bool done = false; 
     bool conn = false;
     JsonObject obj_e;
@@ -91,7 +92,7 @@ bool WebSocketBinding::_setEventHandled(String ip_s, int num) {
     return conn;
 }
 
-bool WebSocketBinding::_setIAHandled(String ip_s, int num, String endpoint) {
+bool embeddedWoT_WebSocket::_setIAHandled(String ip_s, int num, String endpoint) {
     bool done = false; 
     bool conn = false;
     JsonObject obj_ia;
@@ -123,7 +124,7 @@ bool WebSocketBinding::_setIAHandled(String ip_s, int num, String endpoint) {
     return done;
 }
 
-void WebSocketBinding::_clientConnect(uint8_t num, uint8_t* pl, size_t length) {
+void embeddedWoT_WebSocket::_clientConnect(uint8_t num, uint8_t* pl, size_t length) {
     IPAddress ip;
     String ip_s = "";
     const char* payload = (char *) pl;
@@ -188,7 +189,7 @@ void WebSocketBinding::_clientConnect(uint8_t num, uint8_t* pl, size_t length) {
     Serial.println();
 }
 
-void WebSocketBinding::bindEventSchema(DynamicJsonDocument doc) {
+void embeddedWoT_WebSocket::bindEventSchema(DynamicJsonDocument doc) {
     int eventsBound = doc.size();
     JsonObject obj = doc.as<JsonObject>();
     //JsonObject::iterator it = obj.begin();
@@ -225,28 +226,28 @@ void WebSocketBinding::bindEventSchema(DynamicJsonDocument doc) {
     }
 }
 
-void WebSocketBinding::exposeProperties(const String *endpoints, properties_handler callbacks[], int prop_num) {
+void embeddedWoT_WebSocket::exposeProperties(const String *endpoints, properties_handler callbacks[], int prop_num) {
     this->properties_endpoint = endpoints;
     this->properties_cb = callbacks;
 
     this->properties_number = prop_num;
 }
 
-void WebSocketBinding::exposeActions(const String *endpoints, actions_handler callbacks[], int act_num) {
+void embeddedWoT_WebSocket::exposeActions(const String *endpoints, actions_handler callbacks[], int act_num) {
     this->actions_endpoint = endpoints;
     this->actions_cb = callbacks;
 
     this->actions_number = act_num;
 }
 
-void WebSocketBinding::exposeEvents(const String *endpoints, int evt_num) {
+void embeddedWoT_WebSocket::exposeEvents(const String *endpoints, int evt_num) {
     this->events_endpoint = endpoints;
 
     this->events_number = evt_num;
     //Serial.printf("Events endpoint 0 is %s\n", this->events_endpoint[0].c_str());
 }
 
-void WebSocketBinding::_clientDisconnect(uint8_t num, uint8_t* pl) {
+void embeddedWoT_WebSocket::_clientDisconnect(uint8_t num, uint8_t* pl) {
     IPAddress ip;
     String ip_s = "";
     const char* payload = (char *) pl;
@@ -296,7 +297,7 @@ void WebSocketBinding::_clientDisconnect(uint8_t num, uint8_t* pl) {
     Serial.println();
 }
 
-void WebSocketBinding::_clientText(uint8_t num, uint8_t* pl, size_t length) {
+void embeddedWoT_WebSocket::_clientText(uint8_t num, uint8_t* pl, size_t length) {
     
     IPAddress ip;
     String ip_s = "";
