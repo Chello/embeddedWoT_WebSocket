@@ -84,6 +84,9 @@ class embeddedWoT_WebSocket {
         /**
          * Expose properties via WebSocket protocol.
          * For emitting an event, use sendWebSocketTXT() and refer the defined endpoint.
+         * 
+         * If you set an empty subscription schema, you have to subscribe anyway sending an empty object as first WS message.
+         * Else if you set a subscription schema, you have to use one of them before receiving events
          * @param endpoints array of endpoints
          * @param evt_num the total number of endpoints/callbacks 
          */
@@ -139,7 +142,6 @@ class embeddedWoT_WebSocket {
         int events_number;
         
         int i, j, k, n;
-
 };
 
 // #include "embeddedWoT_WebSocket.cpp"
